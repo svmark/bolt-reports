@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 밀라노-코르티나 동계올림픽 소식</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    
+    header h1 {
+      color: #667eea;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    
+    header .subtitle {
+      color: #666;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+    
+    .medal-bar {
+      height: 8px;
+      background: linear-gradient(90deg, #FFD700 0%, #C0C0C0 33%, #CD7F32 66%, #667eea 100%);
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .info-card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .info-card h3 {
+      color: #667eea;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .info-card p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 1em;
+    }
+    
+    .medal-section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .medal-section h2 {
+      color: #667eea;
+      font-size: 1.8em;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+    
+    .medal-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    
+    .medal-item {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 10px;
+      padding: 20px;
+      border-left: 5px solid #667eea;
+      transition: all 0.3s;
+    }
+    
+    .medal-item.gold {
+      border-left-color: #FFD700;
+      background: linear-gradient(135deg, #fff8f0 0%, #ffe4b5 100%);
+    }
+    
+    .medal-item.silver {
+      border-left-color: #C0C0C0;
+      background: linear-gradient(135deg, #f0f0f0 0%, #dcdcdc 100%);
+    }
+    
+    .medal-item.bronze {
+      border-left-color: #CD7F32;
+      background: linear-gradient(135deg, #fff5f0 0%, #ffe4d6 100%);
+    }
+    
+    .medal-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .medal-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    
+    .medal-item h4 {
+      font-size: 1.1em;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .medal-item p {
+      color: #666;
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+    
+    .chart-section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .chart-section h2 {
+      color: #667eea;
+      font-size: 1.8em;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+    
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin-bottom: 20px;
+    }
+    
+    .highlights {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .highlights h2 {
+      color: #667eea;
+      font-size: 1.8em;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+    
+    .highlight-item {
+      border-left: 4px solid #667eea;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    
+    .highlight-item:hover {
+      background: #eef2f8;
+      padding-left: 25px;
+    }
+    
+    .highlight-item strong {
+      color: #667eea;
+      font-weight: 600;
+    }
+    
+    footer {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+    
+    .event-countdown {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .event-countdown .date {
+      font-size: 1.3em;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .event-countdown .location {
+      font-size: 0.95em;
+      opacity: 0.9;
+    }
+    
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8em;
+      }
+      
+      .medal-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>❄️ 2026 밀라노-코르티나 동계올림픽</h1>
+      <p class="subtitle">최신 소식 & 한국 메달 현황</p>
+      <div class="medal-bar"></div>
+    </header>
+    
+    <div class="event-countdown">
+      <div class="date">📅 2026년 2월 6일 ~ 22일</div>
+      <div class="location">📍 이탈리아 밀라노 & 코르티나담페초</div>
+    </div>
+    
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>🏅 올림픽 정보</h3>
+        <p><strong>개최지:</strong> 이탈리아<br>
+        <strong>기간:</strong> 17일<br>
+        <strong>지위:</strong> 동계올림픽 역사 기록(공동 개최지 최초 명명)</p>
+      </div>
+      <div class="info-card">
+        <h3>🇮🇹 역사적 의미</h3>
+        <p>소치(2014) 이후 유럽에서 12년 만에 개최<br>이탈리아의 세 번째 동계올림픽<br>토리노(2006) 이후 20년 만</p>
+      </div>
+      <div class="info-card">
+        <h3>🇰🇷 한국의 도전</h3>
+        <p>쇼트트랙, 스피드스케이팅, 스노보드 등 주력 종목 집중<br>설상종목에서의 메달 기대<br>여성 선수단의 강한 성적</p>
+      </div>
+    </div>
+    
+    <div class="medal-section">
+      <h2>🏆 한국 메달 현황</h2>
+      <div class="medal-list">
+        <div class="medal-item silver">
+          <div class="medal-icon">🥈</div>
+          <h4>스노보드 평행대회전</h4>
+          <p><strong>김상겸</strong> 은메달<br>한국의 첫 번째 메달<br>설상종목 두 번째 은메달</p>
+        </div>
+        <div class="medal-item">
+          <div class="medal-icon">🏃</div>
+          <h4>쇼트트랙 스피드스케이팅</h4>
+          <p>혼성 계주 준결승 진출<br>2월 10일 준준결승부터 파이널까지<br>여자 매스스타트 도전 중</p>
+        </div>
+        <div class="medal-item">
+          <div class="medal-icon">⛸️</div>
+          <h4>스피드스케이팅</h4>
+          <p>정재원 남자 매스스타트<br>3연속 올림픽 메달 도전<br>2월 22일 결선 예정</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="highlights">
+      <h2>📢 주요 뉴스 하이라이트</h2>
+      <div class="highlight-item">
+        <strong>🎯 한국의 메달 스타트:</strong> 스노보드 평행대회전에서 김상겸이 은메달을 획득, 한국의 첫 메달을 기록했습니다.
+      </div>
+      <div class="highlight-item">
+        <strong>🏃 쇼트트랙 흥미진진한 경쟁:</strong> 한국 쇼트트랙 여자 선수들이 혼성 계주에서 활약 중입니다. 2월 10일 준준결승부터 파이널까지 숨 가쁜 승부가 예상됩니다.
+      </div>
+      <div class="highlight-item">
+        <strong>⛸️ 정재원의 도전:</strong> 스피드스케이팅 정재원 선수가 남자 매스스타트에서 3연속 올림픽 메달을 노리고 있습니다.
+      </div>
+      <div class="highlight-item">
+        <strong>🌍 올림픽 역사:</strong> 이번 대회는 올림픽 역사상 처음으로 공동 개최지 두 도시의 이름을 동시에 명명한 대회입니다. (밀라노-코르티나담페초)
+      </div>
+      <div class="highlight-item">
+        <strong>🏅 강력한 한국:</strong> 한국은 쇼트트랙과 스피드스케이팅에서 세계적 경쟁력을 가지고 있으며, 이번 올림픽에서도 메달 경쟁을 펼치고 있습니다.
+      </div>
+    </div>
+    
+    <div class="chart-section">
+      <h2>📊 한국 동계올림픽 역사</h2>
+      <div class="chart-container">
+        <canvas id="medalChart"></canvas>
+      </div>
+      <p style="color: #666; text-align: center; font-size: 0.9em;">
+        한국의 최근 동계올림픽 메달 성적 추이 (2018 평창 이후)
+      </p>
+    </div>
+    
+    <footer>
+      <p>📝 2026 밀라노-코르티나 동계올림픽 소식 요약 | 최종 업데이트: 2026년 2월 11일</p>
+      <p style="margin-top: 10px; opacity: 0.8;">출처: Olympics.com, 나무위키</p>
+    </footer>
+  </div>
+  
+  <script>
+    // 메달 차트
+    const ctx = document.getElementById('medalChart').getContext('2d');
+    const medalChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['2018 평창', '2022 베이징', '2026 밀라노'],
+        datasets: [
+          {
+            label: '금메달',
+            data: [5, 2, 0],
+            backgroundColor: 'rgba(255, 215, 0, 0.8)',
+            borderColor: '#FFD700',
+            borderWidth: 2
+          },
+          {
+            label: '은메달',
+            data: [8, 4, 1],
+            backgroundColor: 'rgba(192, 192, 192, 0.8)',
+            borderColor: '#C0C0C0',
+            borderWidth: 2
+          },
+          {
+            label: '동메달',
+            data: [3, 2, 0],
+            backgroundColor: 'rgba(205, 127, 50, 0.8)',
+            borderColor: '#CD7F32',
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              font: { family: "'Noto Sans KR', sans-serif", size: 14, weight: '500' },
+              padding: 15,
+              usePointStyle: true
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 10,
+            ticks: {
+              stepSize: 2,
+              font: { family: "'Noto Sans KR', sans-serif" }
+            },
+            grid: {
+              color: 'rgba(0, 0, 0, 0.05)'
+            }
+          },
+          x: {
+            ticks: {
+              font: { family: "'Noto Sans KR', sans-serif", weight: '500' }
+            },
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
