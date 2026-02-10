@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Winter Olympics - Medal Standings & News Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .medal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .medal-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .medal-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .medal-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .medal-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .medal-table tbody tr:nth-child(1),
+        .medal-table tbody tr:nth-child(2) {
+            background: #fff9e6;
+            font-weight: 600;
+        }
+        
+        .rank {
+            color: #667eea;
+            font-weight: 700;
+            min-width: 40px;
+        }
+        
+        .country {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .gold { color: #d4af37; font-weight: 700; }
+        .silver { color: #c0c0c0; font-weight: 700; }
+        .bronze { color: #cd7f32; font-weight: 700; }
+        
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .highlight-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .highlight-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .highlight-card p {
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        .medal-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .medal-icon.gold { background: #d4af37; }
+        .medal-icon.silver { background: #c0c0c0; }
+        .medal-icon.bronze { background: #cd7f32; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .stat-box .label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-box .value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .news-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .news-item strong {
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .news-item p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .update-time {
+            text-align: center;
+            color: #999;
+            font-size: 0.9em;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .upcoming-events {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .upcoming-events h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .upcoming-events ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .upcoming-events li {
+            color: #333;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .upcoming-events li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏅 2026 Winter Olympics Report</h1>
+            <p>Milano Cortina | February 6-22, 2026</p>
+        </div>
+        
+        <div class="content">
+            <!-- Statistics Section -->
+            <div class="section">
+                <h2>📊 Key Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="label">Days Completed</div>
+                        <div class="value">4</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="label">Days Remaining</div>
+                        <div class="value">13</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="label">Total Medal Events</div>
+                        <div class="value">116</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="label">Participating Nations</div>
+                        <div class="value">88</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Medal Count Chart -->
+            <div class="section">
+                <h2>🥇 Medal Count by Country (Top 10)</h2>
+                <div class="chart-container">
+                    <canvas id="medalChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Medal Standings Table -->
+            <div class="section">
+                <h2>🏆 Official Medal Standings</h2>
+                <table class="medal-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">Rank</th>
+                            <th>Country</th>
+                            <th style="width: 80px;"><span class="medal-icon gold"></span>Gold</th>
+                            <th style="width: 80px;"><span class="medal-icon silver"></span>Silver</th>
+                            <th style="width: 80px;"><span class="medal-icon bronze"></span>Bronze</th>
+                            <th style="width: 80px;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="rank">T1</td>
+                            <td class="country">🇳🇴 Norway</td>
+                            <td class="gold">6</td>
+                            <td class="silver">1</td>
+                            <td class="bronze">4</td>
+                            <td><strong>11</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T1</td>
+                            <td class="country">🇮🇹 Italy</td>
+                            <td class="gold">2</td>
+                            <td class="silver">2</td>
+                            <td class="bronze">7</td>
+                            <td><strong>11</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">3</td>
+                            <td class="country">🇯🇵 Japan</td>
+                            <td class="gold">2</td>
+                            <td class="silver">2</td>
+                            <td class="bronze">3</td>
+                            <td><strong>7</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T4</td>
+                            <td class="country">🇨🇭 Switzerland</td>
+                            <td class="gold">3</td>
+                            <td class="silver">1</td>
+                            <td class="bronze">1</td>
+                            <td><strong>5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T4</td>
+                            <td class="country">🇦🇹 Austria</td>
+                            <td class="gold">2</td>
+                            <td class="silver">3</td>
+                            <td class="bronze">0</td>
+                            <td><strong>5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T4</td>
+                            <td class="country">🇩🇪 Germany</td>
+                            <td class="gold">2</td>
+                            <td class="silver">2</td>
+                            <td class="bronze">1</td>
+                            <td><strong>5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T4</td>
+                            <td class="country">🇸🇪 Sweden</td>
+                            <td class="gold">2</td>
+                            <td class="silver">2</td>
+                            <td class="bronze">1</td>
+                            <td><strong>5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T4</td>
+                            <td class="country">🇺🇸 United States</td>
+                            <td class="gold">2</td>
+                            <td class="silver">2</td>
+                            <td class="bronze">1</td>
+                            <td><strong>5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T9</td>
+                            <td class="country">🇫🇷 France</td>
+                            <td class="gold">1</td>
+                            <td class="silver">2</td>
+                            <td class="bronze">0</td>
+                            <td><strong>3</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T9</td>
+                            <td class="country">🇨🇦 Canada</td>
+                            <td class="gold">0</td>
+                            <td class="silver">1</td>
+                            <td class="bronze">2</td>
+                            <td><strong>3</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="rank">T11</td>
+                            <td class="country">🇰🇷 South Korea</td>
+                            <td class="gold">0</td>
+                            <td class="silver">1</td>
+                            <td class="bronze">1</td>
+                            <td><strong>2</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Key Highlights -->
+            <div class="section">
+                <h2>⭐ Key Highlights</h2>
+                <div class="highlights">
+                    <div class="highlight-card">
+                        <h3>🥇 Alpine Skiing</h3>
+                        <p><strong>Breezy Johnson</strong> delivers USA a gold medal in Women's Downhill on Day 2, showcasing American strength in alpine skiing.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>🩸 Figure Skating Triumph</h3>
+                        <p><strong>Ilia Malinin</strong> (USA) lands a quad backflip (Quad God) in the men's free skate, helping Team USA defend its team event gold from 2022.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>🏂 Norwegian Dominance</h3>
+                        <p>Norway leads with 6 gold medals as of Day 4, maintaining its historical dominance in winter sports with strong performances across multiple disciplines.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>🏒 NHL Returns</h3>
+                        <p>NHL players return to Olympic hockey competition for the first time since 2014, elevating the level of play and attracting global audiences.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Breaking News -->
+            <div class="section">
+                <h2>📰 Breaking News</h2>
+                <div class="news-item">
+                    <strong>🎿 USA Medals Focus</strong>
+                    <p>Team USA has earned 5 total medals (2 Gold, 2 Silver, 1 Bronze) as of February 10, 10:02 a.m. ET, tying them for 4th place overall.</p>
+                </div>
+                <div class="news-item">
+                    <strong>⚠️ Lindsey Vonn Update</strong>
+                    <p>Alpine skiing legend Lindsey Vonn's official Olympic comeback attempt is underway after another recent knee injury, drawing significant media attention.</p>
+                </div>
+                <div class="news-item">
+                    <strong>🎯 New Event - Ski Mountaineering</strong>
+                    <p>Ski mountaineering makes its Olympic debut at Milano Cortina 2026, featuring both men's and women's sprint competitions and mixed team events.</p>
+                </div>
+                <div class="news-item">
+                    <strong>🏅 Host Nation Strength</strong>
+                    <p>Italy demonstrates strong home advantage, tied with Norway at 11 total medals (2 Gold, 2 Silver, 7 Bronze), excelling particularly in luge and sledding.</p>
+                </div>
+            </div>
+            
+            <!-- Upcoming Events -->
+            <div class="section">
+                <div class="upcoming-events">
+                    <h3>📅 Featured Upcoming Events (Feb 11-12)</h3>
+                    <ul>
+                        <li>🏂 <strong>Alpine Skiing:</strong> Men's Super-G (Feb 11)</li>
+                        <li>🎿 <strong>Cross-Country Skiing:</strong> Various Sprint Events</li>
+                        <li>⛸️ <strong>Figure Skating:</strong> Ice Dance Free Dance (Feb 11)</li>
+                        <li>🛷 <strong>Luge:</strong> Women's & Men's Doubles (Feb 11)</li>
+                        <li>⛷️ <strong>Speed Skating:</strong> Men's 1000m (Feb 11)</li>
+                        <li>❄️ <strong>Freestyle Skiing:</strong> Women's Moguls Final (Feb 11)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Summary -->
+            <div class="section">
+                <h2>💡 Analysis Summary</h2>
+                <div class="news-item">
+                    <strong>🎯 Current Standings:</strong>
+                    <p>Norway and Italy are locked in a tight battle for the overall medal count lead with 11 medals each. Norway's dominance in gold medals (6 vs Italy's 2) suggests they may pull ahead as the Games progress. The United States is competitive with 5 medals and strong performances from star athletes like Breezy Johnson and Ilia Malinin.</p>
+                </div>
+                <div class="news-item">
+                    <strong>🌟 Key Takeaways:</strong>
+                    <p>• Alpine skiing showing USA strength<br>
+                    • Figure skating continues American excellence<br>
+                    • European nations (Norway, Italy, Switzerland) dominating early<br>
+                    • 13 days remain with many events still to come<br>
+                    • Historic debut of ski mountaineering as Olympic sport</p>
+                </div>
+            </div>
+            
+            <div class="update-time">
+                <p>Report Last Updated: February 11, 2026 | Data as of February 10, 2026, 10:02 AM ET</p>
+                <p>Source: USA Today, Sporting News, Official Olympic Records</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Medal Chart Data
+        const chartCanvas = document.getElementById('medalChart');
+        if (chartCanvas) {
+            const ctx = chartCanvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Norway', 'Italy', 'Japan', 'Switzerland', 'Austria', 'Germany', 'Sweden', 'USA', 'France', 'Canada'],
+                    datasets: [
+                        {
+                            label: 'Gold Medals',
+                            data: [6, 2, 2, 3, 2, 2, 2, 2, 1, 0],
+                            backgroundColor: '#d4af37',
+                            borderColor: '#b8860b',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Silver Medals',
+                            data: [1, 2, 2, 1, 3, 2, 2, 2, 2, 1],
+                            backgroundColor: '#c0c0c0',
+                            borderColor: '#808080',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Bronze Medals',
+                            data: [4, 7, 3, 1, 0, 1, 1, 1, 0, 2],
+                            backgroundColor: '#cd7f32',
+                            borderColor: '#8b4513',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            ticks: {
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 2
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
