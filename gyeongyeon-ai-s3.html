@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경연(經筵) AI 시즌3 요약</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #f5f5f0;
+  color: #2d2d2d;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3d 50%, #1a3a2a 100%);
+  border-radius: 16px;
+  padding: 48px 36px;
+  text-align: center;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+.hero-season {
+  font-size: 13px;
+  font-weight: 500;
+  color: #a8c5b0;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+.hero-hanja {
+  font-size: 16px;
+  color: #8aad94;
+  margin-bottom: 20px;
+}
+.hero-subtitle {
+  font-size: 15px;
+  color: #c8dece;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Section */
+.section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 28px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2d5a3d;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title .icon {
+  font-size: 18px;
+}
+
+/* List items */
+.item {
+  display: flex;
+  align-items: flex-start;
+  padding: 6px 0;
+  font-size: 14px;
+}
+.item-label {
+  font-weight: 500;
+  color: #666;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+.item-value {
+  color: #2d2d2d;
+  font-weight: 400;
+}
+.item-value strong {
+  font-weight: 700;
+  color: #1a3a2a;
+}
+
+/* Curriculum */
+.curriculum-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0eb;
+  font-size: 14px;
+}
+.curriculum-item:last-child {
+  border-bottom: none;
+}
+.cur-num {
+  font-weight: 700;
+  color: #2d5a3d;
+  min-width: 64px;
+  flex-shrink: 0;
+}
+.cur-topic {
+  font-weight: 500;
+  color: #2d2d2d;
+}
+.cur-date {
+  color: #999;
+  font-size: 12px;
+  margin-left: auto;
+  flex-shrink: 0;
+  padding-left: 12px;
+}
+
+/* Highlight box */
+.highlight {
+  background: linear-gradient(135deg, #f8faf8 0%, #eef4ef 100%);
+  border-left: 3px solid #2d5a3d;
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Tour section */
+.tour-banner {
+  background: linear-gradient(135deg, #c9a96e 0%, #b8944f 100%);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 16px;
+  color: #fff;
+  text-align: center;
+}
+.tour-banner h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.tour-banner .tour-dest {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+.tour-banner .tour-detail {
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+/* Fee badge */
+.fee-badge {
+  display: inline-block;
+  background: #2d5a3d;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+/* Contact */
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  gap: 10px;
+}
+.contact-item .c-icon {
+  font-size: 16px;
+}
+.contact-item .c-name {
+  font-weight: 500;
+  min-width: 140px;
+}
+.contact-item .c-tel {
+  color: #2d5a3d;
+  font-weight: 500;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0d8;
+  font-size: 12px;
+  color: #999;
+}
+
+@media (max-width: 480px) {
+  .container { padding: 20px 16px 40px; }
+  .hero { padding: 36px 24px; }
+  .hero-title { font-size: 28px; }
+  .section { padding: 20px; }
+  .item { flex-direction: column; gap: 2px; }
+  .item-label { min-width: auto; }
+  .cur-date { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-season">Season 3 · The Final</div>
+    <div class="hero-title">경연 AI</div>
+    <div class="hero-hanja">經筵</div>
+    <div class="hero-subtitle">내 기업에 AI를 적용하기 위한 실천적 전략<br>김대식 교수의 CEO 생각혁명</div>
+  </div>
+
+  <!-- 개요 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🎓</span> 개요</div>
+    <div class="item"><span class="item-label">프로그램</span><span class="item-value"><strong>경연 AI 시즌3: THE FINAL</strong></span></div>
+    <div class="item"><span class="item-label">리드멘토</span><span class="item-value">김대식 교수 (KAIST, 뇌과학·AI)</span></div>
+    <div class="item"><span class="item-label">주제</span><span class="item-value">내 기업에 AI를 적용하기 위한 실천적 전략</span></div>
+    <div class="item"><span class="item-label">대상</span><span class="item-value">CEO 및 임원, 오피니언 리더</span></div>
+  </div>
+
+  <!-- 일정·장소 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📅</span> 일정·장소</div>
+    <div class="item"><span class="item-label">기간</span><span class="item-value"><strong>2026.3.10(화) ~ 6.20(토)</strong> · 약 4개월</span></div>
+    <div class="item"><span class="item-label">장소</span><span class="item-value">안다즈 서울 강남 외</span></div>
+    <div class="item"><span class="item-label">조찬 수업</span><span class="item-value">06:40~09:00 (화요일, 총 9회)</span></div>
+    <div class="item"><span class="item-label">만찬 수업</span><span class="item-value">16:00~20:30 (1회)</span></div>
+    <div class="item"><span class="item-label">국내연수</span><span class="item-value">4.3(금)~4(토) 1박2일 · 설해원(양양)</span></div>
+    <div class="item"><span class="item-label">해외연수</span><span class="item-value">6.12(금)~20(토) 7박9일 · 남스페인·포르투갈</span></div>
+  </div>
+
+  <!-- 커리큘럼 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📖</span> 커리큘럼</div>
+    <div class="curriculum-item"><span class="cur-num">1회</span><span class="cur-topic">내 기업의 AI 좌표</span><span class="cur-date">3/10</span></div>
+    <div class="curriculum-item"><span class="cur-num">2회</span><span class="cur-topic">AI 기반 의사결정</span><span class="cur-date">3/17</span></div>
+    <div class="curriculum-item"><span class="cur-num">3회</span><span class="cur-topic">AI R&D 혁신</span><span class="cur-date">3/24</span></div>
+    <div class="curriculum-item"><span class="cur-num">4~5회</span><span class="cur-topic">국내연수 + 골프대회 + 브레인어웨이크</span><span class="cur-date">4/3~4</span></div>
+    <div class="curriculum-item"><span class="cur-num">6회</span><span class="cur-topic">AI 인사·조직 혁신</span><span class="cur-date">4/14</span></div>
+    <div class="curriculum-item"><span class="cur-num">7회</span><span class="cur-topic">로봇과 AI 제조업의 미래</span><span class="cur-date">4/21</span></div>
+    <div class="curriculum-item"><span class="cur-num">8회</span><span class="cur-topic">브랜드·디자인 AI 융합전략</span><span class="cur-date">4/28</span></div>
+    <div class="curriculum-item"><span class="cur-num">9회</span><span class="cur-topic">소버린 AI와 비즈니스 미래</span><span class="cur-date">5/12</span></div>
+    <div class="curriculum-item"><span class="cur-num">10회</span><span class="cur-topic">AI 시대 리더십과 전략 설계</span><span class="cur-date">5/19</span></div>
+    <div class="curriculum-item"><span class="cur-num">11회</span><span class="cur-topic">시네톨로지 (문화 수업)</span><span class="cur-date">5/26</span></div>
+    <div class="curriculum-item"><span class="cur-num">12~14회</span><span class="cur-topic">해외연수 · 남스페인·포르투갈</span><span class="cur-date">6/12~20</span></div>
+  </div>
+
+  <!-- 해외연수 -->
+  <div class="tour-banner">
+    <h3>🌍 Grand Tour</h3>
+    <div class="tour-dest">남스페인 · 포르투갈</div>
+    <div class="tour-detail">
+      6.12(금) ~ 6.20(토) · 7박 9일<br>
+      세비야 · 그라나다 · 포르투 · 리스본<br>
+      대항해 시대의 출발점에서 AI 시대 리더십을 탐구
+    </div>
+  </div>
+
+  <!-- 참가비 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💰</span> 참가비</div>
+    <div style="text-align:center; padding: 8px 0;">
+      <div class="fee-badge">490만원</div>
+      <div style="font-size:13px; color:#888; margin-top:4px;">VAT 별도 · 국내연수 일부(골프·숙박) 및 해외연수 비용 별도</div>
+    </div>
+  </div>
+
+  <!-- 문의 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📞</span> 문의</div>
+    <div style="font-size:13px; color:#888; margin-bottom:12px;">CEO & PARTNERS (C&P) 경연 운영 사무국</div>
+    <div class="contact-item"><span class="c-icon">☎️</span><span class="c-name">운영 사무국</span><span class="c-tel">02-585-1205</span></div>
+    <div class="contact-item"><span class="c-icon">📱</span><span class="c-name">유치훈 본부장</span><span class="c-tel">010-9429-1902</span></div>
+    <div class="contact-item"><span class="c-icon">📱</span><span class="c-name">김성환 선임연구원</span><span class="c-tel">010-9875-2334</span></div>
+  </div>
+
+  <div class="footer">
+    경연(經筵) AI · CEO & PARTNERS<br>
+    서울시 서초구 강남대로 381
+  </div>
+
+</div>
+</body>
+</html>
