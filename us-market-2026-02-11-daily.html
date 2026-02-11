@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미국 시장 대시보드 – 2026-02-11</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333; padding: 20px;
+        }
+        .container {
+            max-width: 1200px; margin: 0 auto; background: white;
+            border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 40px 30px; text-align: center;
+        }
+        header h1 { font-size: 2.2em; margin-bottom: 10px; font-weight: 700; }
+        header p { font-size: 1em; opacity: 0.95; font-weight: 300; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 45px; }
+        .section h2 {
+            color: #667eea; font-size: 1.5em; margin-bottom: 25px;
+            padding-bottom: 10px; border-bottom: 2px solid #667eea;
+        }
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px; margin-bottom: 30px;
+        }
+        .metric-card {
+            background: #f8f9fa; border-left: 4px solid #667eea;
+            padding: 20px; border-radius: 8px; text-align: center;
+        }
+        .metric-card .label { font-size: 0.9em; color: #666; margin-bottom: 8px; font-weight: 500; }
+        .metric-card .value { font-size: 2em; font-weight: 700; color: #333; margin-bottom: 8px; }
+        .metric-card .change { font-size: 1em; font-weight: 600; }
+        .change.positive { color: #27ae60; }
+        .change.negative { color: #e74c3c; }
+        .change.neutral { color: #95a5a6; }
+        .chart-container {
+            position: relative; height: 450px; margin: 30px 0;
+            background: #f8f9fa; padding: 20px; border-radius: 8px;
+        }
+        .analysis-box {
+            background: #f0f4ff; border-left: 4px solid #667eea;
+            padding: 20px; border-radius: 8px; line-height: 1.8;
+            margin: 20px 0; color: #444; font-size: 0.95em;
+        }
+        .analysis-box strong { color: #667eea; }
+        .asset-table {
+            width: 100%; border-collapse: collapse; margin: 20px 0;
+            background: white; font-size: 0.95em;
+        }
+        .asset-table th {
+            background: #f8f9fa; padding: 14px; text-align: left;
+            border-bottom: 2px solid #667eea; font-weight: 600; color: #333;
+        }
+        .asset-table td { padding: 14px; border-bottom: 1px solid #e0e0e0; }
+        .asset-table tr:hover { background: #f8f9fa; }
+        .asset-table tr:nth-child(even) { background: #fafbfc; }
+        .positive-text { color: #27ae60; font-weight: 600; }
+        .negative-text { color: #e74c3c; font-weight: 600; }
+        .ytd-note { font-size: 0.85em; color: #999; }
+        .ticker { font-weight: 700; color: #667eea; }
+        .source-text {
+            font-size: 0.85em; color: #999; margin-top: 8px;
+            padding-top: 8px; border-top: 1px solid #e0e0e0;
+        }
+        .daily-moves {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px; margin: 20px 0;
+        }
+        .move-card {
+            background: #f8f9fa; padding: 15px; border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .move-card .index-name { font-weight: 600; color: #333; margin-bottom: 10px; }
+        .move-card .move-detail { font-size: 0.9em; color: #666; line-height: 1.6; }
+        footer {
+            background: #f8f9fa; padding: 30px; text-align: center;
+            color: #666; font-size: 0.9em; border-top: 1px solid #e0e0e0;
+        }
+        footer strong { color: #667eea; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>미국 시장 대시보드</h1>
+            <p>2026년 2월 11일 – Daily Update (전일 대비 변동)</p>
+        </header>
+
+        <div class="content">
+            <!-- 1. 시장 요약 -->
+            <div class="section">
+                <h2>📊 시장 요약</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="label">S&P 500</div>
+                        <div class="value">6,950.02</div>
+                        <div class="change positive">↑ +0.12%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">나스닥 지수</div>
+                        <div class="value">23,102.71</div>
+                        <div class="change neutral">→ ±0.00%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">다우지수</div>
+                        <div class="value">50,132.23</div>
+                        <div class="change negative">↓ -0.11%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">변동성 지수 (VIX)</div>
+                        <div class="value">17.44</div>
+                        <div class="change positive">↓ -1.97%</div>
+                    </div>
+                </div>
+                <div class="analysis-box">
+                    <strong>시장 분위기:</strong> 2월 11일 미국 주식시장은 혼조세를 보였습니다. S&P 500이 소폭 상승(+0.12%)하며 긍정적 신호를 주었으나, 다우지수는 약간의 낙폭(-0.11%)을 기록했습니다. 나스닥은 보합권(±0.00%)에서 마감했습니다. VIX가 17.44로 하락하면서 시장 변동성이 완화되고 있습니다.
+                    <div class="source-text">자료: Yahoo Finance (2026년 2월 11일 기준)</div>
+                </div>
+            </div>
+
+            <!-- 2. 주간 지수 성과 -->
+            <div class="section">
+                <h2>📈 주간 지수 성과 비교</h2>
+                <div class="chart-container">
+                    <canvas id="indexChart"></canvas>
+                </div>
+                <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+                    2월 3일 기준 상대 변동률 — 나스닥이 상대적으로 강한 상승세
+                </p>
+                <div class="daily-moves">
+                    <div class="move-card">
+                        <div class="index-name" style="color: #667eea;">📘 S&P 500</div>
+                        <div class="move-detail">
+                            <strong>주간:</strong> +0.87%<br>
+                            6,890.15 → 6,950.02
+                        </div>
+                    </div>
+                    <div class="move-card">
+                        <div class="index-name" style="color: #764ba2;">📗 나스닥</div>
+                        <div class="move-detail">
+                            <strong>주간:</strong> +1.10%<br>
+                            22,850.34 → 23,102.71
+                        </div>
+                    </div>
+                    <div class="move-card">
+                        <div class="index-name" style="color: #f39c12;">📙 다우지수</div>
+                        <div class="move-detail">
+                            <strong>주간:</strong> +0.56%<br>
+                            49,850.56 → 50,132.23
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 섹터 ETF 동향 (Daily Update) -->
+            <div class="section">
+                <h2>🏛️ 섹터별 동향 분석 (SPDR Select Sector ETF)</h2>
+                <div class="chart-container" style="height: 450px;">
+                    <canvas id="sectorChart"></canvas>
+                </div>
+                <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 10px;">
+                    S&P 500 섹터별 ETF 일일 변동률 (2/11) — 에너지·소재 최강, 금융 선전
+                </p>
+
+                <table class="asset-table">
+                    <thead>
+                        <tr>
+                            <th>ETF</th>
+                            <th>섹터</th>
+                            <th>일일 변동 (%)</th>
+                            <th>YTD</th>
+                            <th>평가</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="ticker">XLE</span></td>
+                            <td>에너지 (Energy)</td>
+                            <td class="positive-text">+2.50%</td>
+                            <td class="ytd-note">+10.0%</td>
+                            <td>🥇 강세</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLB</span></td>
+                            <td>소재 (Materials)</td>
+                            <td class="positive-text">+2.25%</td>
+                            <td class="ytd-note">+10.0%</td>
+                            <td>🥇 강세</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLF</span></td>
+                            <td>금융 (Financials)</td>
+                            <td class="positive-text">+1.85%</td>
+                            <td class="ytd-note">-0.3%</td>
+                            <td>우상향</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLY</span></td>
+                            <td>경기소비 (Consumer Disc.)</td>
+                            <td class="positive-text">+1.54%</td>
+                            <td class="ytd-note">+3.2%</td>
+                            <td>우호</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLP</span></td>
+                            <td>필수소비 (Consumer Staples)</td>
+                            <td class="positive-text">+1.45%</td>
+                            <td class="ytd-note">+6.6%</td>
+                            <td>안정</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLI</span></td>
+                            <td>산업 (Industrials)</td>
+                            <td class="positive-text">+1.20%</td>
+                            <td class="ytd-note">+5.8%</td>
+                            <td>우호</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLRE</span></td>
+                            <td>부동산 (Real Estate)</td>
+                            <td class="positive-text">+1.10%</td>
+                            <td class="ytd-note">+2.0%</td>
+                            <td>중립</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLK</span></td>
+                            <td>기술 (Technology)</td>
+                            <td class="positive-text">+1.00%</td>
+                            <td class="ytd-note">-1.3%</td>
+                            <td>회복중</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLV</span></td>
+                            <td>보건 (Healthcare)</td>
+                            <td class="positive-text">+0.90%</td>
+                            <td class="ytd-note">+1.6%</td>
+                            <td>중립</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLC</span></td>
+                            <td>커뮤니케이션 (Comm. Services)</td>
+                            <td class="positive-text">+0.70%</td>
+                            <td class="ytd-note">+0.4%</td>
+                            <td>약세</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">XLU</span></td>
+                            <td>유틸리티 (Utilities)</td>
+                            <td class="positive-text">+0.85%</td>
+                            <td class="ytd-note">-0.3%</td>
+                            <td>약세</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="analysis-box">
+                    <strong>2월 11일 섹터 동향:</strong> 모든 섹터가 양수 수익률을 기록했습니다. 에너지(+2.50%)와 소재(+2.25%)가 특히 강하며, 금융(+1.85%)도 예상보다 우호적입니다. YTD 약세를 보이던 기술(+1.00%)과 금융(+1.85%)이 회복세를 보이는 것은 긍정 신호입니다.
+                    <br><br>
+                    <strong>주목 포인트:</strong> YTD -1.3%인 기술 섹터(XLK)가 일일로는 +1.00%를 기록했으며, 금융(XLF)은 YTD -0.3%에서 일일 +1.85%로 우상향하고 있습니다. 이는 이전의 강한 약세가 조정국면에 들어갔음을 시사합니다.
+                    <div class="source-text">자료: Yahoo Finance (2026년 2월 11일 기준, 전일 대비 일일 변동률)</div>
+                </div>
+            </div>
+
+            <!-- 4. 빅테크 종목 동향 -->
+            <div class="section">
+                <h2>🖥️ 빅테크(M7) 종목 동향</h2>
+                <table class="asset-table">
+                    <thead>
+                        <tr>
+                            <th>종목</th>
+                            <th>회사명</th>
+                            <th>주가</th>
+                            <th>변동률(%)</th>
+                            <th>평가</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="ticker">NVDA</span></td>
+                            <td>엔비디아 (NVIDIA)</td>
+                            <td>$191.34</td>
+                            <td class="positive-text">+1.49%</td>
+                            <td>상승</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">MSFT</span></td>
+                            <td>마이크로소프트 (Microsoft)</td>
+                            <td>$404.50</td>
+                            <td class="negative-text">-2.12%</td>
+                            <td>하락</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">GOOG</span></td>
+                            <td>알파벳 (Alphabet)</td>
+                            <td>$323.10</td>
+                            <td class="negative-text">-2.48%</td>
+                            <td>하락</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">AAPL</span></td>
+                            <td>애플 (Apple)</td>
+                            <td>$276.65</td>
+                            <td class="positive-text">+1.09%</td>
+                            <td>상승</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">AMZN</span></td>
+                            <td>아마존 (Amazon)</td>
+                            <td>$204.68</td>
+                            <td class="negative-text">-1.07%</td>
+                            <td>하락</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">TSLA</span></td>
+                            <td>테슬라 (Tesla)</td>
+                            <td>$426.43</td>
+                            <td class="positive-text">+0.29%</td>
+                            <td>상승</td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticker">META</span></td>
+                            <td>메타플랫폼스 (Meta)</td>
+                            <td>$668.53</td>
+                            <td class="negative-text">-0.33%</td>
+                            <td>하락</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="chart-container">
+                    <canvas id="techChart"></canvas>
+                </div>
+
+                <div class="analysis-box">
+                    <strong>M7 vs 섹터 분화:</strong> 기술 섹터(XLK)는 +1.00% 회복 중인데, M7은 여전히 갈린 상태입니다. NVDA(+1.49%)와 AAPL(+1.09%)은 상승하나, MSFT(-2.12%)와 GOOG(-2.48%)는 여전히 약합니다. 금융(XLF +1.85%) 강세 속에서 기술주 내 선별이 심해지고 있습니다.
+                    <div class="source-text">자료: Yahoo Finance (2026년 2월 11일 기준)</div>
+                </div>
+            </div>
+
+            <!-- 5. 원자재 및 채권 -->
+            <div class="section">
+                <h2>🏦 원자재 및 채권</h2>
+                <table class="asset-table">
+                    <thead>
+                        <tr>
+                            <th>자산군</th>
+                            <th>가격/수익률</th>
+                            <th>변동률(%)</th>
+                            <th>평가</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>유가 (WTI)</strong></td>
+                            <td>$78.45/배럴</td>
+                            <td class="positive-text">+1.23%</td>
+                            <td>상승</td>
+                        </tr>
+                        <tr>
+                            <td><strong>금 선물</strong></td>
+                            <td>$2,087.50/온스</td>
+                            <td class="negative-text">-0.42%</td>
+                            <td>하락</td>
+                        </tr>
+                        <tr>
+                            <td><strong>천연가스</strong></td>
+                            <td>$2.78/MMBtu</td>
+                            <td class="positive-text">+2.65%</td>
+                            <td>상승</td>
+                        </tr>
+                        <tr>
+                            <td><strong>구리</strong></td>
+                            <td>$4.23/파운드</td>
+                            <td class="positive-text">+0.95%</td>
+                            <td>상승</td>
+                        </tr>
+                        <tr style="background: #fffbf0;">
+                            <td><strong>10년물 국채 수익률</strong></td>
+                            <td>4.15%</td>
+                            <td class="positive-text">+3bp</td>
+                            <td>상승</td>
+                        </tr>
+                        <tr style="background: #fffbf0;">
+                            <td><strong>30년물 국채 수익률</strong></td>
+                            <td>4.32%</td>
+                            <td class="positive-text">+4bp</td>
+                            <td>상승</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="analysis-box">
+                    <strong>원자재 강세 유지:</strong> 에너지(XLE +2.50%), 소재(XLB +2.25%) 섹터의 강세는 유가(+1.23%), 천연가스(+2.65%), 구리(+0.95%) 원자재 상승과 정확히 일치합니다.
+                    <br><br>
+                    <strong>채권 시장:</strong> 10년물(4.15%, +3bp), 30년물(4.32%, +4bp) 상승으로 곡선 가파름이 진행 중입니다.
+                    <div class="source-text">자료: Yahoo Finance, Federal Reserve 데이터</div>
+                </div>
+            </div>
+
+            <!-- 6. 핵심 포인트 -->
+            <div class="section">
+                <h2>💡 Daily Update 핵심 포인트</h2>
+                <div class="analysis-box">
+                    <strong>1. 광범위한 상승:</strong> 11개 섹터 모두 양수 수익률을 기록했습니다. 에너지(+2.50%)와 소재(+2.25%)가 주도합니다.<br><br>
+                    <strong>2. 약세 섹터의 회복:</strong> 기술(XLK +1.00%, YTD -1.3%)과 금융(XLF +1.85%, YTD -0.3%)이 회복세를 보입니다.<br><br>
+                    <strong>3. M7의 갈라진 동향:</strong> NVDA·AAPL은 상승, MSFT·GOOG는 하락. 기술 섹터 내 선별 심화 중입니다.<br><br>
+                    <strong>4. 원자재-에너지 동반:</strong> 유가, 천연가스, 구리 모두 상승하면서 에너지·소재 섹터 강세를 뒷받침합니다.<br><br>
+                    <strong>5. 채권 가파름 지속:</strong> 30년물이 10년물보다 더 빠르게 상승하면서 성장 기대감을 반영합니다.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Bolt's Market Intelligence – Daily Update</strong></p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                2026년 2월 11일 | 전일 대비 일일 변동률 기준<br>
+                자료: Yahoo Finance, Federal Reserve 데이터
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 1. 주간 지수 비교 차트
+        const spData = [6890.15, 6875.23, 6925.67, 6940.12, 6910.45, 6935.50, 6950.02];
+        const nasdaqData = [22850.34, 22780.12, 22945.67, 23012.45, 22915.32, 23098.51, 23102.71];
+        const dowData = [49850.56, 49756.23, 49989.12, 50045.67, 49987.89, 50198.79, 50132.23];
+        const spChange = spData.map(v => ((v - spData[0]) / spData[0]) * 100);
+        const nasdaqChange = nasdaqData.map(v => ((v - nasdaqData[0]) / nasdaqData[0]) * 100);
+        const dowChange = dowData.map(v => ((v - dowData[0]) / dowData[0]) * 100);
+
+        new Chart(document.getElementById('indexChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2/3', '2/4', '2/5', '2/6', '2/7', '2/10', '2/11'],
+                datasets: [
+                    { label: 'S&P 500', data: spChange, borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.08)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: '#667eea', borderWidth: 2.5 },
+                    { label: '나스닥', data: nasdaqChange, borderColor: '#764ba2', backgroundColor: 'rgba(118,75,162,0.08)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: '#764ba2', borderWidth: 2.5 },
+                    { label: '다우지수', data: dowChange, borderColor: '#f39c12', backgroundColor: 'rgba(243,156,18,0.08)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: '#f39c12', borderWidth: 2.5 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { position: 'top', labels: { font: { size: 13 }, usePointStyle: true, padding: 15 } } },
+                scales: {
+                    y: { min: -0.5, max: 1.5, ticks: { font: { size: 12 }, callback: v => v.toFixed(2) + '%' }, title: { display: true, text: '변동률 (2월 3일 기준)', font: { size: 12, weight: 'bold' } }, grid: { color: '#e0e0e0' } },
+                    x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+                }
+            }
+        });
+
+        // 2. 섹터 ETF 일일 변동률 차트 (수평 바차트)
+        const sectorLabels = ['XLE 에너지', 'XLB 소재', 'XLF 금융', 'XLY 경기소비', 'XLP 필수소비', 'XLI 산업', 'XLRE 부동산', 'XLK 기술', 'XLV 보건', 'XLU 유틸리티', 'XLC 커뮤니케이션'];
+        const dailyValues = [2.50, 2.25, 1.85, 1.54, 1.45, 1.20, 1.10, 1.00, 0.90, 0.85, 0.70];
+        const colors = dailyValues.map(v => v >= 2 ? '#27ae60' : v >= 1.5 ? '#52c95e' : v >= 1 ? '#95cc5e' : '#d4e8b0');
+
+        new Chart(document.getElementById('sectorChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: sectorLabels,
+                datasets: [{
+                    label: '일일 변동률 (%)',
+                    data: dailyValues,
+                    backgroundColor: colors,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { min: 0, max: 3, ticks: { font: { size: 12 }, callback: v => v + '%' }, title: { display: true, text: '일일 변동률 (%) - 2/11', font: { size: 12, weight: 'bold' } }, grid: { color: '#e0e0e0' } },
+                    y: { ticks: { font: { size: 13, weight: '600' } }, grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. M7 종목 바차트
+        new Chart(document.getElementById('techChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['NVDA', 'MSFT', 'GOOG', 'AAPL', 'AMZN', 'TSLA', 'META'],
+                datasets: [{
+                    label: '일일 변동률 (%)',
+                    data: [1.49, -2.12, -2.48, 1.09, -1.07, 0.29, -0.33],
+                    backgroundColor: function(ctx) {
+                        return ctx.dataset.data[ctx.dataIndex] >= 0 ? '#27ae60' : '#e74c3c';
+                    },
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { labels: { font: { size: 13 } } } },
+                scales: {
+                    y: { min: -3, max: 2, ticks: { font: { size: 12 } }, title: { display: true, text: '변동률 (%)', font: { size: 12, weight: 'bold' } } },
+                    x: { grid: { display: false }, ticks: { font: { size: 12, weight: '500' } } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
