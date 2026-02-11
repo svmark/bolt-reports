@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미국 주식 시장 마감 시황 - 2026-02-11</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .timestamp {
+            color: #999;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 12px;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-name {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .metric-value {
+            text-align: right;
+        }
+        
+        .price {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .change {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        
+        .change.positive {
+            color: #10b981;
+        }
+        
+        .change.negative {
+            color: #ef4444;
+        }
+        
+        .change.neutral {
+            color: #6b7280;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            position: relative;
+            height: 400px;
+        }
+        
+        .chart-container h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        canvas {
+            max-height: 350px;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .index-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .index-name {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        .index-price {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .index-change {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .footer {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        
+        .summary-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .summary-text {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ 미국 주식 시장 마감 시황</h1>
+            <p>2026년 2월 11일 (수) 미국 정규거래 종료</p>
+            <div class="timestamp">데이터 기준: 2026-02-12 06:24 KST</div>
+        </header>
+        
+        <!-- 주요 지수 -->
+        <div class="index-grid">
+            <div class="index-card">
+                <div class="index-name">Dow Jones</div>
+                <div class="index-price">50,121.40</div>
+                <div class="index-change">-0.13%</div>
+            </div>
+            <div class="index-card">
+                <div class="index-name">S&P 500</div>
+                <div class="index-price">6,941.47</div>
+                <div class="index-change">-0.00%</div>
+            </div>
+            <div class="index-card">
+                <div class="index-name">NASDAQ</div>
+                <div class="index-price">23,066.47</div>
+                <div class="index-change">-0.16%</div>
+            </div>
+            <div class="index-card">
+                <div class="index-name">VIX (공포지수)</div>
+                <div class="index-price">17.58</div>
+                <div class="index-change">-1.18%</div>
+            </div>
+        </div>
+        
+        <!-- 시장 요약 -->
+        <div class="summary-box">
+            <div class="summary-text">
+                <strong>시장 개요:</strong> 미국 주식시장이 약한 마감을 기록했습니다. 다우 -0.13%, S&P 500 -0.00%, 나스닥 -0.16%로 거의 보합 수준의 폐장을 기록했습니다. VIX는 1.18% 하락하며 시장의 공포감이 완화되고 있음을 시사합니다.
+            </div>
+        </div>
+        
+        <!-- M7 주요 종목 -->
+        <div class="card full-width">
+            <h2>🔥 M7 주요 종목</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+                <div class="metric" style="flex-direction: column; border: none;">
+                    <div class="metric-name">NVDA</div>
+                    <div class="metric-value">
+                        <div class="price">$190.05</div>
+                        <div class="change positive">+1.51 (+0.80%)</div>
+                    </div>
+                </div>
+                <div class="metric" style="flex-direction: column; border: none;">
+                    <div class="metric-name">MSFT</div>
+                    <div class="metric-value">
+                        <div class="price">$404.37</div>
+                        <div class="change negative">-8.90 (-2.15%)</div>
+                    </div>
+                </div>
+                <div class="metric" style="flex-direction: column; border: none;">
+                    <div class="metric-name">GOOG</div>
+                    <div class="metric-value">
+                        <div class="price">$311.33</div>
+                        <div class="change negative">-7.30 (-2.29%)</div>
+                    </div>
+                </div>
+                <div class="metric" style="flex-direction: column; border: none;">
+                    <div class="metric-name">AAPL</div>
+                    <div class="metric-value">
+                        <div class="price">$275.50</div>
+                        <div class="change positive">+1.82 (+0.67%)</div>
+                    </div>
+                </div>
+                <div class="metric" style="flex-direction: column; border: none;">
+                    <div class="metric-name">AMZN</div>
+                    <div class="metric-value">
+                        <div class="price">$204.08</div>
+                        <div class="change negative">-2.88 (-1.39%)</div>
+                    </div>
+                </div>
+                <div class="metric" style="flex-direction: column; border: none;">
+                    <div class="metric-name">TSLA</div>
+                    <div class="metric-value">
+                        <div class="price">$428.27</div>
+                        <div class="change positive">+3.06 (+0.72%)</div>
+                    </div>
+                </div>
+                <div class="metric" style="flex-direction: column; border: none;">
+                    <div class="metric-name">META</div>
+                    <div class="metric-value">
+                        <div class="price">$668.69</div>
+                        <div class="change negative">-2.03 (-0.30%)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 섹터별 성과 바차트 -->
+        <div class="chart-container">
+            <h2>📊 섹터별 성과 (%)​ — Option 2 성과 바차트</h2>
+            <canvas id="sectorChart"></canvas>
+        </div>
+        
+        <!-- 섹터별 상세 정보 -->
+        <div class="card full-width">
+            <h2>📈 11개 Sector ETF 상세 데이터</h2>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8f9fa; border-bottom: 2px solid #ddd;">
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">섹터</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600;">종가</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600;">변동가</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600;">변동률</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">⚙️ XLK (기술)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$142.97</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">+0.42</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981; font-weight: 600;">+0.29%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">🏥 XLV (헬스케어)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$156.25</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">+0.92</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981; font-weight: 600;">+0.59%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">🏦 XLF (금융)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$52.74</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444;">-0.81</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444; font-weight: 600;">-1.51%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">⛽ XLE (에너지)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$54.98</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">+1.40</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981; font-weight: 600;">+2.61%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">🏭 XLI (산업)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$174.84</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">+0.93</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981; font-weight: 600;">+0.53%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">🛒 XLY (소비재)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$117.76</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444;">-0.57</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444; font-weight: 600;">-0.48%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">🥣 XLP (필수소비)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$88.40</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">+1.25</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981; font-weight: 600;">+1.43%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">🏢 XLRE (부동산)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$42.81</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444;">-0.03</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444; font-weight: 600;">-0.07%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">⚡ XLU (유틸리티)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$44.60</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">+0.40</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981; font-weight: 600;">+0.90%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">⛏️ XLB (소재)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$53.62</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981;">+0.71</td>
+                            <td style="padding: 12px; text-align: right; color: #10b981; font-weight: 600;">+1.34%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px;">📡 XLC (통신)</td>
+                            <td style="padding: 12px; text-align: right; font-weight: 600;">$116.78</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444;">-0.81</td>
+                            <td style="padding: 12px; text-align: right; color: #ef4444; font-weight: 600;">-0.69%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>💡 데이터 출처: Yahoo Finance via yfinance library</p>
+            <p>🔄 자료 업데이트: 2026-02-12 06:24 KST</p>
+            <p>⚡ Powered by OpenClaw + Yahoo Finance Skill</p>
+        </div>
+    </div>
+    
+    <script>
+        const ctx = document.getElementById('sectorChart').getContext('2d');
+        const sectorData = {
+            labels: ['XLE\n에너지', 'XLB\n소재', 'XLP\n필수소비', 'XLU\n유틸', 'XLI\n산업', 'XLV\n헬스', 'XLK\n기술', 'XLY\n소비재', 'XLC\n통신', 'XLRE\n부동산', 'XLF\n금융'],
+            datasets: [{
+                label: '변동률 (%)',
+                data: [2.61, 1.34, 1.43, 0.90, 0.53, 0.59, 0.29, -0.48, -0.69, -0.07, -1.51],
+                backgroundColor: [
+                    '#10b981', '#10b981', '#10b981', '#10b981', '#10b981', '#10b981', '#10b981',
+                    '#ef4444', '#ef4444', '#f3f4f6', '#ef4444'
+                ],
+                borderRadius: 6,
+                borderSkipped: false
+            }]
+        };
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: sectorData,
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.x.toFixed(2) + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        min: -2,
+                        max: 3,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.05)'
+                        }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
