@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SND Labs 2026 새해 인사장</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .card {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+        
+        .left-section {
+            background: linear-gradient(135deg, #2d5a8c 0%, #1e3a5f 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .left-section::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .left-section::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        .left-content {
+            text-align: center;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .horse-emoji {
+            font-size: 120px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+        }
+        
+        .year-text {
+            font-size: 72px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        .right-section {
+            background: linear-gradient(180deg, #faf9f7 0%, #f0ebe4 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 50px;
+        }
+        
+        .main-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #2d5a8c;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            border-left: 4px solid #2d5a8c;
+            padding-left: 20px;
+        }
+        
+        .recipient {
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        
+        .content-text {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #5a6c7d;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .closing-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d5a8c;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(45, 90, 140, 0.2);
+        }
+        
+        .footer-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            text-align: right;
+        }
+        
+        @media (max-width: 768px) {
+            .card {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            
+            .left-section {
+                padding: 40px 30px;
+                min-height: 300px;
+            }
+            
+            .right-section {
+                padding: 40px 30px;
+            }
+            
+            .year-text {
+                font-size: 56px;
+            }
+            
+            .horse-emoji {
+                font-size: 80px;
+                margin-bottom: 20px;
+            }
+            
+            .main-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="left-section">
+            <div class="left-content">
+                <div class="horse-emoji">🐴</div>
+                <div class="year-text">2026</div>
+                <div class="subtitle">
+                    말의 해<br>
+                    새로운 도약
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="main-title">
+                2026년, 에스엔디랩스의<br>
+                새로운 도약을 함께<br>
+                그려갑니다
+            </div>
+            
+            <div class="recipient">
+                Patrick님, 안녕하십니까.
+            </div>
+            
+            <div class="content-text">
+                지난 한 해 동안 에스엔디랩스가 거둔 모든 성과는 여러분의 열정과 헌신이 있었기에 가능했습니다. 묵묵히 자리를 지키며 최선을 다해주신 여러분께 깊은 감사의 인사를 전합니다.
+            </div>
+            
+            <div class="content-text">
+                새해에도 우리 에스엔디랩스가 함께 성장하며, 여러분의 가정에도 건강과 행복이 가득하기를 기원합니다.
+            </div>
+            
+            <div class="closing-text">
+                새해 복 많이 받으십시오.
+            </div>
+            
+            <div class="footer-text">
+                SND Labs<br>
+                2026년 2월
+            </div>
+        </div>
+    </div>
+</body>
+</html>
