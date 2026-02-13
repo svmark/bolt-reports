@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국 부동산 시장 2026년 전망</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 50px;
+        }
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        .subsection {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+        .subsection-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .point {
+            margin: 12px 0;
+            padding-left: 20px;
+            line-height: 1.8;
+            font-size: 1em;
+        }
+        .point::before {
+            content: "▸";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-left: -20px;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        .highlight strong {
+            color: #856404;
+        }
+        .risk {
+            background: #f8d7da;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #dc3545;
+            margin: 15px 0;
+        }
+        .risk strong {
+            color: #721c24;
+        }
+        .opportunity {
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #28a745;
+            margin: 15px 0;
+        }
+        .opportunity strong {
+            color: #155724;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        .metric-card {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 10px 10px 0;
+            min-width: 200px;
+            text-align: center;
+        }
+        .metric-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .metric-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .strategy-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .strategy-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .strategy-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .strategy-box {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 한국 부동산 시장 2026년 전망</h1>
+            <p>정부 정책 | 언론 분석 | 커뮤니티 의견 종합</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">2026년 2월 13일 작성</p>
+        </header>
+
+        <div class="content">
+            <!-- 시장 현황 -->
+            <div class="section">
+                <h2 class="section-title">📊 2025년 부동산 시장 총결산</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">양극화를 넘어 '초양극화' 시대 도입</div>
+                    <div class="point">강남 3구 중심 서울 핵심지역은 역대 최고 신고가 경신</div>
+                    <div class="point">지방 및 비핵심 지역은 정체 또는 약세 지속</div>
+                    <div class="point">정부의 3차례 강한 규제(6.27, 10.15, 9.7대책)에도 서울 집값 상승세 진정 안 됨</div>
+                    <div class="point">"똘똘한 한 채" 선호 심화 + 신규 공급 부족 구조화</div>
+                    
+                    <div class="highlight">
+                        <strong>핵심 인식:</strong> 2025년은 "입지 경쟁력이 확실한 자산으로 수요 집중" 현상이 심화된 해였습니다. 
+                        서울 선도지역의 신고가는 계속되는 반면, 비핵심 자산은 조정 국면에서 벗어나지 못했습니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2026년 시장 전망 -->
+            <div class="section">
+                <h2 class="section-title">🔮 2026년 시장 전망 (공식 기관)</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">1. 거시경제 (주택산업연구원)</div>
+                    <div class="point">경제성장률: 1.8~2.1% (2025년보다 개선 예상)</div>
+                    <div class="point">기준금리: 미국 인하에 따라 한국도 추가 인하 가능성</div>
+                    <div class="point">유동성(M2) 증가: 시중 자금이 자산시장으로 유입 → 자산가격 상승 압력 증가</div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2. 주택매매 시장</div>
+                    <div class="point">전체적으로 공급 부족 상태 누적</div>
+                    <div class="point">수도권 준공 물량 확실히 감소 중</div>
+                    <div class="point">상승요인 > 하락요인 → 26년 주택매매가격 상승 전망</div>
+                    <div class="point">특히 서울뿐 아니라 수도권~지방까지 상승세 확대 예상</div>
+                    
+                    <div class="opportunity">
+                        <strong>긍정 신호:</strong> 공급 부족 + 유동성 증가 + 경제 개선 = 상승 동력 충분
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">3. 전월세 시장</div>
+                    <div class="point">전월세 수요 증가 전망</div>
+                    <div class="point">하지만 아파트/비아파트 준공 물량 감소</div>
+                    <div class="point">결과: 전월세 공급 부족 → 전월세 가격 상승 가능성 높음</div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">4. 공급 현황</div>
+                    <div class="point">26년 준공 물량: 예년보다 확실히 적음</div>
+                    <div class="point">인허가, 착공, 분양: 17~21년 연평균 대비 더 적음</div>
+                    <div class="point">정부의 구체적 공급계획 아직 미흡 → 26년 1월 추가 공급대책 예정</div>
+                </div>
+            </div>
+
+            <!-- 정부 정책 -->
+            <div class="section">
+                <h2 class="section-title">⚖️ 2026년 정부 정책 방향</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">수요억제 정책 강화</div>
+                    <div class="point">강력한 투기억제대책 지속 예상</div>
+                    <div class="point">대출규제 (6.27), 10.15 정책 등 선행 정책 계속 유지</div>
+                    <div class="point">추가 과세강화정책: 보유세 + 거래세 강화 가능성</div>
+                    
+                    <div class="risk">
+                        <strong>주의:</strong> 과거 노무현/문재인 정부의 과세강화는 6개월 이상 효과 미흡
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">공급확대 정책</div>
+                    <div class="point">26년 1월 중 추가 공급대책 발표 예정</div>
+                    <div class="point">그런데 9.7 정책처럼 구체성 부족 시 역효과 가능성</div>
+                    <div class="point">실제 실수요자 금융지원 + 공급 가속화 필요</div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">다주택자 과세</div>
+                    <div class="point">양도세 중과세 한시적 유예 (5월 말 만료 예정)</div>
+                    <div class="point">26년 5월 이후 정책: 다주택자의 자산 재편 전략 필요</div>
+                </div>
+            </div>
+
+            <!-- 언론 분석 -->
+            <div class="section">
+                <h2 class="section-title">📰 언론 분석: 초양극화 시대 도래</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">한경 (하나은행 WM 리포트 기준)</div>
+                    <div class="point"><strong>핵심 메시지:</strong> "2026년은 전면적 동반 상승이 아닌 선별적 상승의 시대"</div>
+                    <div class="point">입지·공급·수요층을 구분한 전략적 접근 필수</div>
+                    <div class="point">프라임 자산 vs 비프라임 자산 간 격차 극심화</div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">데이터 기반 분석</div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>지역 / 자산군</th>
+                                <th>2025년 평가</th>
+                                <th>2026년 전망</th>
+                                <th>투자 관점</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>서울 강남권</strong></td>
+                                <td>신고가 경신</td>
+                                <td>상승 지속</td>
+                                <td>고점 주의, 진입 신중</td>
+                            </tr>
+                            <tr>
+                                <td><strong>서울 비강남권</strong></td>
+                                <td>약세</td>
+                                <td>부분 회복 예상</td>
+                                <td>선별적 매수 기회</td>
+                            </tr>
+                            <tr>
+                                <td><strong>수도권 핵심</strong></td>
+                                <td>양호</td>
+                                <td>상승 확대</td>
+                                <td>우량지역 선별 매수</td>
+                            </tr>
+                            <tr>
+                                <td><strong>지방</strong></td>
+                                <td>약세 지속</td>
+                                <td>소폭 개선 가능</td>
+                                <td>회피 권장</td>
+                            </tr>
+                            <tr>
+                                <td><strong>상업용(프라임)</strong></td>
+                                <td>신고가</td>
+                                <td>안정적 유지</td>
+                                <td>장기 보유 우수</td>
+                            </tr>
+                            <tr>
+                                <td><strong>상업용(비프라임)</strong></td>
+                                <td>약세</td>
+                                <td>조정 우려</td>
+                                <td>재검토 필요</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 커뮤니티 의견 -->
+            <div class="section">
+                <h2 class="section-title">💬 온라인 커뮤니티 종합 의견</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">주요 콘센서스</div>
+                    <div class="point"><strong>현실적 우려:</strong> "규제 강화에도 가격 상승... 내집마련이 점점 어려워진다"</div>
+                    <div class="point"><strong>공급 문제:</strong> "준공 물량 부족이 근본 원인, 정부 정책만으로는 한계"</div>
+                    <div class="point"><strong>전월세:</strong> "전월세 가격도 계속 오를 것 같은데 대책이 없다"</div>
+                    <div class="point"><strong>투자자 의견:</strong> "핵심지역 한 채는 계속 보유, 나머지는 상업용/해외 자산으로 분산"</div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">일반 실수요자 심정</div>
+                    <div class="risk">
+                        <strong>피로감 고조:</strong> 3년 연속 규제 강화에도 여전히 집값이 오르는 상황에 대한 좌절감
+                    </div>
+                    <div class="point">전세 사기 위험 + 월세 가격 상승 = 주택 구하기 점점 어려워짐</div>
+                    <div class="point">결국 다주택자는 자산 분산, 무주택자는 대기 모드 진입</div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">투자자 전략 변화</div>
+                    <div class="point">6.27, 10.15 규제 이후 강남 외 지역 매매 감소 → 수도권 핵심지역으로 양극화</div>
+                    <div class="point">5월 다주택자 양도세 중과세 유예 기한 임박 → 자산 재편 시작 예상</div>
+                    <div class="point">"똘똘한 한 채" 원칙으로 회귀하되, 추가 자산은 상업용/해외로 분산</div>
+                </div>
+            </div>
+
+            <!-- 투자 전략 -->
+            <div class="section">
+                <h2 class="section-title">🎯 2026년 투자자별 전략</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">1. 실수요자 (내집마련)</div>
+                    <div class="strategy-box">
+                        <div class="strategy-item">
+                            <h4>✅ 추천 전략</h4>
+                            <div class="point">자기자본 범위 내에서 주택 구매 (대출 규제로 레버리지 제한)</div>
+                            <div class="point">서울 비강남 + 수도권 핵심지역 선별 매수</div>
+                            <div class="point">전월세 상승 압박으로 매매 차라리 우수</div>
+                        </div>
+                        <div class="strategy-item">
+                            <h4>⚠️ 주의사항</h4>
+                            <div class="point">강남권 고점 진입 지양</div>
+                            <div class="point">전세 사기 위험 고조 → 월세 선호 추세</div>
+                            <div class="point">금리 추가 인하 대기도 한 가지 선택지</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">2. 다주택 투자자</div>
+                    <div class="strategy-box">
+                        <div class="strategy-item">
+                            <h4>✅ 추천 전략</h4>
+                            <div class="point">핵심 1채 + 나머지 자산 분산 (상업용/해외)</div>
+                            <div class="point">5월 양도세 중과세 유예 만료 전 정책 주시</div>
+                            <div class="point">서울 프라임 자산 + 수도권 신축 선별 보유</div>
+                        </div>
+                        <div class="strategy-item">
+                            <h4>⚠️ 리스크 관리</h4>
+                            <div class="point">규제지역 확대 가능성 → 사전 제한 예상</div>
+                            <div class="point">전세 사기 위험 + 월세 수익률 악화 = 현금화 시점 신중 검토</div>
+                            <div class="point">다주택 보유로 인한 과세 강화 = 자산 구조 재편 필수</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">3. 상업용 부동산 투자자</div>
+                    <div class="strategy-box">
+                        <div class="strategy-item">
+                            <h4>✅ 추천 전략</h4>
+                            <div class="point">프라임 오피스 (강남역, 여의도) + 핫플레이스 (성수동, 압구정로데오) 우선</div>
+                            <div class="point">데이터센터: AI 수요 지속으로 장기 성장성 우수</div>
+                            <div class="point">물류/리테일: 고금리에도 우수 현금흐름 기대</div>
+                        </div>
+                        <div class="strategy-item">
+                            <h4>⚠️ 회피 자산</h4>
+                            <div class="point">비프라임 오피스 (임대율 저조)</div>
+                            <div class="point">부실 상권의 상업용 → 조정 리스크 높음</div>
+                            <div class="point">금리 민감 자산 → 기준금리 인하 추이 주시</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 리스크 요인 -->
+            <div class="section">
+                <h2 class="section-title">⚠️ 2026년 주요 리스크 요인</h2>
+                
+                <div class="risk">
+                    <strong>정책 변수:</strong> 강한 수요억제 정책이 역설적으로 가격 상승을 야기할 수 있음 (공급 부족 심화)
+                </div>
+                <div class="risk">
+                    <strong>금리 역행:</strong> 글로벌 금리가 예상과 다르게 움직일 경우 시장 변동성 급증
+                </div>
+                <div class="risk">
+                    <strong>경기 악화:</strong> 보호무역 기조 심화 + 글로벌 수요 둔화 → 경제성장률 목표(1.8~2.1%) 하회 가능
+                </div>
+                <div class="risk">
+                    <strong>공급 충격:</strong> 갑작스런 규제 폐지 또는 대규모 공급 발표 시 시장 리셋 가능
+                </div>
+            </div>
+
+            <!-- 결론 -->
+            <div class="section">
+                <h2 class="section-title">🎓 2026년 부동산 시장 결론</h2>
+                
+                <div class="highlight">
+                    <strong>핵심 인식:</strong><br>
+                    2026년 한국 부동산 시장은 "초양극화" 시대입니다. 
+                    서울 강남권과 수도권 핵심지역은 계속 상승할 가능성이 높지만, 
+                    나머지 지역은 정체 또는 조정 국면에서 벗어나기 어려울 것으로 예상됩니다.
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">투자자의 대원칙</div>
+                    <div class="point"><strong>입지 선택의 중요성:</strong> 비입지 우량주택보다 입지 우량주택이 극명하게 우월</div>
+                    <div class="point"><strong>공급 부족 신호:</strong> 정부 규제가 강할수록 공급 부족 → 장기 가격 상승</div>
+                    <div class="point"><strong>다각화 필요:</strong> 주택만으로는 부족 → 상업용/해외 자산으로 분산</div>
+                    <div class="point"><strong>세제 변화 주시:</strong> 5월 양도세 유예 만료 & 보유세/거래세 강화 예상</div>
+                </div>
+
+                <div class="opportunity">
+                    <strong>기회 포인트:</strong><br>
+                    전월세 상승 지속 → 매매 진입 선호 증가 → 우량 매매 자산 매력 상승<br>
+                    공급 부족 + 유동성 증가 → 핵심지역 장기 보유자 우위<br>
+                    프라임 상업용 + 데이터센터 → AI, 디지털 수요로 장기 성장성
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📌 최종 종합 평가표</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>투자 유형</th>
+                            <th>2026년 전망</th>
+                            <th>수익률</th>
+                            <th>리스크</th>
+                            <th>추천도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>서울 강남권 주택</strong></td>
+                            <td>상승 지속</td>
+                            <td>3~7%</td>
+                            <td>중상 (고점 우려)</td>
+                            <td>⭐⭐⭐☆☆</td>
+                        </tr>
+                        <tr>
+                            <td><strong>수도권 핵심 주택</strong></td>
+                            <td>상승 기대</td>
+                            <td>5~10%</td>
+                            <td>중 (선별 필요)</td>
+                            <td>⭐⭐⭐⭐☆</td>
+                        </tr>
+                        <tr>
+                            <td><strong>지방 주택</strong></td>
+                            <td>정체/약세</td>
+                            <td>-2~2%</td>
+                            <td>높음 (공급 리스크)</td>
+                            <td>⭐☆☆☆☆</td>
+                        </tr>
+                        <tr>
+                            <td><strong>프라임 상업용</strong></td>
+                            <td>안정적 유지</td>
+                            <td>3~5%</td>
+                            <td>낮음</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>데이터센터</strong></td>
+                            <td>상승 기대</td>
+                            <td>5~8%</td>
+                            <td>중 (기술 리스크)</td>
+                            <td>⭐⭐⭐⭐☆</td>
+                        </tr>
+                        <tr>
+                            <td><strong>비프라임 상업용</strong></td>
+                            <td>조정 우려</td>
+                            <td>0~3%</td>
+                            <td>높음</td>
+                            <td>⭐⭐☆☆☆</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>📊 자료출처: 한국경제신문, 주택산업연구원, Cushman & Wakefield, 온라인 커뮤니티</p>
+            <p>📅 작성일: 2026년 2월 13일 | ⚠️ 본 리포트는 현재 가용 정보 기반이며, 향후 정책 변화에 따라 조정될 수 있습니다.</p>
+        </footer>
+    </div>
+</body>
+</html>
