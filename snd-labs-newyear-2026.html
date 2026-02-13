@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년 SND Labs 연하장</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+        }
+        
+        .card-container {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, #fff8e7 0%, #ffe8d6 50%, #fff0e6 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .left-section {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        .left-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .horse-figure {
+            font-size: 120px;
+            margin-bottom: 30px;
+            animation: gallop 3s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        @keyframes gallop {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .year-text {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            z-index: 1;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            text-align: center;
+            opacity: 0.9;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        
+        .right-section {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 50px;
+            overflow-y: auto;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            border-left: 5px solid #2a5298;
+            padding-left: 20px;
+        }
+        
+        .content {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .content p {
+            margin-bottom: 15px;
+        }
+        
+        .signature {
+            font-size: 14px;
+            color: #666;
+            margin-top: 30px;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .decoration {
+            position: absolute;
+            opacity: 0.1;
+        }
+        
+        .decoration-top {
+            top: 20px;
+            right: 30px;
+            font-size: 60px;
+        }
+        
+        .decoration-bottom {
+            bottom: 20px;
+            left: 30px;
+            font-size: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                aspect-ratio: auto;
+            }
+            
+            .left-section {
+                padding: 40px 30px;
+                min-height: 300px;
+            }
+            
+            .right-section {
+                padding: 40px 30px;
+                min-height: 400px;
+            }
+            
+            .horse-figure {
+                font-size: 80px;
+                margin-bottom: 20px;
+            }
+            
+            .year-text {
+                font-size: 32px;
+            }
+            
+            .title {
+                font-size: 20px;
+            }
+            
+            .content {
+                font-size: 14px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        .right-section::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .right-section::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .right-section::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="left-section">
+            <div class="horse-figure">🐴</div>
+            <div class="year-text">2026</div>
+            <div class="subtitle">
+                말의 해<br>
+                새로운 도약
+            </div>
+            <div class="decoration decoration-top">🌸</div>
+        </div>
+        
+        <div class="right-section">
+            <div class="title">
+                2026년, 에스엔디랩스의<br>새로운 도약을 함께 그려갑니다
+            </div>
+            
+            <div class="content">
+                <p>임직원 여러분, 안녕하십니까.</p>
+                
+                <p>지난 한 해 동안 에스엔디랩스가 거둔 모든 성과는 여러분의 열정과 헌신이 있었기에 가능했습니다. 묵묵히 자리를 지키며 최선을 다해주신 여러분께 깊은 감사의 인사를 전합니다.</p>
+                
+                <p>새해에도 우리 에스엔디랩스가 함께 성장하며, 여러분의 가정에도 건강과 행복이 가득하기를 기원합니다.</p>
+                
+                <p style="font-weight: 600; margin-top: 20px;">새해 복 많이 받으십시오.</p>
+            </div>
+            
+            <div class="signature">
+                SND Labs<br>
+                2026년 2월
+            </div>
+            
+            <div class="decoration decoration-bottom">🌿</div>
+        </div>
+    </div>
+</body>
+</html>
